@@ -8,6 +8,19 @@ class TodoList extends Component {
 		this.toggleClick = this.toggleClick.bind(this)
 	}
 
+	componentWillMount() {
+		this.props.todosL()
+	}
+
+	shouldComponentUpdate(nextProps) { 
+		console.log('anterior')
+		console.log(this.props.todos)
+		console.log('suigiente')
+		console.log(nextProps.todos)
+
+		return nextProps.todos !== this.props.todos
+	}
+
 	handleSubmit(e) {
 		const input = e.target
 		const text = input.value
@@ -20,20 +33,23 @@ class TodoList extends Component {
 		}
 	}
 
-	toggleClick(id, event) {
+	toggleClick(id) {
 		this.props.toggleTodo(id)
 	}
 
 	render() {
-		const { todos } = this.props
+		const { todos } = this.props.todos
+
+		// console.log(todos)
+
 
 		return <div>
 			<input type='text' onKeyDown={this.handleSubmit} placeholder='Add Todo'/>
 			<ul className=''>
 				{
 					todos.map((t)=> {
-						return <li key={t.get('id')} onClick={this.toggleClick(t.get('id'))} className=''>
-							<Todo todo={t.toJS()}/>
+						return <li key={t.id} onClick={()=> {this.toggleClick(t.id)} } className=''>
+							<Todo todo={t}/>
 						</li>
 					})
 				}

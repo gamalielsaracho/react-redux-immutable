@@ -7,6 +7,7 @@ class Todo extends Component {
 		if(todo.isDone) {
 			return <strike>{ todo.text }</strike>
 		}else {
+			console.log(todo.isDone)
 			return <span>{ todo.text }</span>
 		}
 	}
